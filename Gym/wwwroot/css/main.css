@@ -1,0 +1,86 @@
+@font-face {
+  font-family: 'MyCustomFont';
+  src:url('../fonts/shabnam-font-v5.0.1/Shabnam-Medium.woff') format('woff');
+}
+
+body {
+  font-family: 'MyCustomFont', sans-serif;
+  background-color: #16181c;
+  background-image: none;
+}
+
+.search-container {
+  position: relative;
+  width: 300px;
+  margin-right: 32%;
+}
+
+#search-input {
+  width: 450px;
+  padding: 10px 40px 10px 10px;
+  font-size: 16px;
+  border: 1px solid #ffffff;
+  border-radius: 5px;
+  outline: none;
+  background-color: #e2dcdc;
+  text-align: center;
+}
+
+#search-button {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 18px;
+  color: #ffffff;
+}
+
+.search-button:hover {
+  color: #ffffff;
+}
+
+#cont {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  padding: 30px;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1400px;
+  box-sizing: border-box;
+}
+
+.item {
+  background-color: rgba(51, 51, 51, 0.5);
+  border-radius: 12px;
+  height: 200px;
+  backdrop-filter: blur(10px);
+  padding: 20px;
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+  text-align:right;
+  transition: transform 0.3s, box-shadow 0.3s;
+  color: white;
+  cursor: pointer;
+}
+
+.item:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+#messageBox {
+  position: fixed;
+  top: 70px;
+  left: 9%;
+  transform: translateX(-50%);
+  background-color: #2E2E2E;
+  color: white;
+  padding: 15px 25px;
+  border-radius: 10px;
+  font-size: 16px;
+  z-index: 1000;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  transition: all 0.5s ease;
+}

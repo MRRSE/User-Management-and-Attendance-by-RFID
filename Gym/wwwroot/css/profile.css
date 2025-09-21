@@ -1,0 +1,408 @@
+.prof{
+    width: 90%;
+    height: 400px;
+    border: 1px solid black;
+    border-radius: 25px;
+    margin: auto;
+    background-color: rgba(51, 51, 51, 0.5);
+    backdrop-filter: blur(10px);
+    color: white;
+    display: flex;
+  }
+  .leftSide{
+    flex: 1;
+  }
+  .rightSide{
+    flex: 1;
+  }
+
+  body {
+    background-color: #16181c;
+    background-image: none;
+  }
+
+  h3,h2,p {
+    margin-top: 20px;
+    margin-right: 20px;
+  }
+  .delete-btn {
+    background-color: #ff4d4d; /* رنگ قرمز جذاب */
+    color: white; /* رنگ متن */
+    border: none; /* بدون خط حاشیه */
+    padding: 10px 20px; /* فاصله داخلی */
+    border-radius: 5px; /* گوشه‌های گرد */
+    font-size: 16px; /* اندازه متن */
+    font-weight: bold; /* ضخامت متن */
+    cursor: pointer; /* نشانگر دست برای کلیک */
+    transition: all 0.3s ease; /* افکت انتقال نرم */
+    width: 100px;
+    height: 50px;
+    margin-top: 200px;
+    margin-left: 265px;
+}
+
+.delete-btn:hover {
+    background-color: #e60000; /* رنگ قرمز تیره‌تر در حالت هاور */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* سایه هنگام هاور */
+    transform: scale(1.05); /* بزرگ شدن دکمه */
+}
+
+.delete-btn:active {
+    background-color: #cc0000; /* رنگ کمی تیره‌تر هنگام کلیک */
+    transform: scale(0.95); /* کوچک شدن دکمه هنگام کلیک */
+}
+
+  .dialog-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* پس‌زمینه نیمه شفاف */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+.dialog-box {
+    background-color: rgb(0, 0, 0);
+    padding: 20px 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+.dialog-box p {
+    margin-bottom: 20px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+#card-message {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* پس‌زمینه نیمه شفاف */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  border: 1px solid black;
+}
+
+#cardd {
+  background-color: rgb(25, 26, 31);
+  padding: 20px 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  color: white;
+}
+
+#cardd p{
+  margin: auto;
+}
+
+.dialog-box button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 0 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.dialog-box button:hover {
+    background-color: #0056b3;
+}
+
+#edit-box{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7); /* پس‌زمینه نیمه شفاف */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  border: 1px solid black;
+}
+
+.editBtn {
+  position: absolute;
+  width: 100px;
+  height: 50px;
+  margin-right: 800px;
+  margin-top: 100px;
+  border: none; /* بدون خط حاشیه */
+  border-radius: 5px; /* گوشه‌های گرد */
+  font-size: 16px; /* اندازه متن */
+  font-weight: bold; /* ضخامت متن */
+  cursor: pointer; /* نشانگر دست برای کلیک */
+}
+
+.confrim{
+  background-color: rgb(25, 26, 31);
+  height: 600px;
+  width: 400px;
+  border-radius: 10px;
+  border: #3a3a3c solid 1px;
+  color: white;
+}
+
+#BoxTitle {
+  color: white;
+  margin-right: 5%;
+}
+
+.confrim input {
+  margin-right: 3%;
+  background-color: rgb(25, 26, 31);
+  border: 1px solid white;
+  border-radius: 5px;
+  text-align: center;
+  outline: none;
+}
+
+.confrim button:hover{
+  background-color: #0056b3;
+}
+
+#messageBox {
+  position: fixed;
+  top: 70px;
+  left: 9%;
+  transform: translateX(-50%);
+  background-color: #2e2e2e;
+  color: white;
+  padding: 15px 25px;
+  border-radius: 10px;
+  font-size: 16px;
+  z-index: 1000;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  transition: all 0.5s ease;
+}
+
+#closeEditBox{
+  background-color: rgb(25, 26, 31);
+  color: rgb(75, 75, 75);
+  font-size: 30px;
+  margin-right: 89%;
+  margin-top: 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#closeConfrim{
+  margin-top: 20px;
+  margin-right: 5%;
+  background-color: #0069f5;
+  border: #056ef8 solid 1px;
+  border-radius: 9px;
+  height: 50px;
+  width: 41%;
+  color: white;
+}
+
+#CancelEdit {
+  margin-right: 5%;
+  background-color: #18191e;
+  border-radius: 9px;
+  height: 50px;
+  width: 41%;
+  color: white;
+  border: #22252b solid 1px;
+}
+/* new styles */
+
+#cont {
+  width: 43%;
+  height: 650px;
+  margin-right: 28.5%;
+  margin-top: 50px;
+  border: #3a3a3c solid 1px;
+  border-radius: 15px;
+  background-color: rgb(28, 31, 35);
+  color: white;
+}
+
+#cont h1{
+  margin-top: 5px;
+}
+
+#profileImg{
+  width: 200px;
+  margin-right: 32%;
+  margin-top: 50px;
+}
+
+#dTitle {
+  margin: auto;
+  width: 100%;
+  justify-content: center;
+  display: flex;
+}
+
+#overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  visibility: hidden;
+}
+
+#loader {
+  border: 6px solid #f3f3f3;
+  border-top: 6px solid #5e5f5f;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+#AddCart {
+  margin-top: 20px;
+  margin-right: 3%;
+  background-color: #0069f5;
+  border: #056ef8 solid 1px;
+  border-radius: 9px;
+  height: 50px;
+  width: 115px;
+  color: white;
+}
+
+#delUser , #tamdidBtn , #EditUser{
+  margin-rightf: 3%;
+  background-color: #18191e;
+  border-radius: 9px;
+  height: 50px;
+  width: 115px;
+  color: white;
+  border: #22252b solid 1px;
+}
+
+#DCont {
+  margin-top: 25px;
+  margin-right: 10%;
+  border-radius: 9px;
+  width: 80%;
+  height: 190px;
+  background-color: #17181e;
+  border: #3a3a3c solid 1px;
+  display: flex;
+}
+#rightD {
+  color: #929496;
+}
+
+#leftD {
+  color: #929496;
+}
+
+.inputStyle {
+}
+
+#nameInp , #lnameInp , #ageInp , #genderInp , #numberInp{
+  width: 90%;
+  height: 50px;
+  margin-right: 5%;
+  text-align: right;
+  border: #3a3a3c solid 1px;
+  padding-right: 10px;
+}
+
+#genderInp {
+  background-color: rgb(25, 26, 31);
+  border: #3a3a3c solid 1px;
+  border-radius: 5px;
+  color: #837e7e;
+}
+
+#darkBg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7); /* پس‌زمینه نیمه شفاف */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  border: 1px solid black;
+}
+
+#tamdidD {
+  width: 300px;
+  height: 250px;
+  border: #3a3a3c solid 1px;
+  border-radius: 9px;
+  background-color: rgb(25, 26, 31);
+}
+
+#tamdidD p {
+  margin-right: 27%;
+  color: white;
+  font-size: 25px;
+}
+
+#tamdidInp {
+  width: 90%;
+  height: 50px;
+  margin-right: 5%;
+  text-align: right;
+  padding-right: 10px;
+  background-color: rgb(25, 26, 31);
+  border-radius: 5px;
+  border: #3a3a3c solid 1px;
+  color: white;
+}
+
+#sabtTamdid {
+  margin-top: 20px;
+  margin-right: 7%;
+  background-color: #0069f5;
+  border: #056ef8 solid 1px;
+  border-radius: 9px;
+  height: 50px;
+  width: 115px;
+  color: white;
+}
+
+#cancelTamdid {
+  margin-right: 7%;
+  background-color: #18191e;
+  border-radius: 9px;
+  height: 50px;
+  width: 115px;
+  color: white;
+  border: #22252b solid 1px;
+}
+
+#manualPer {
+  margin-right: 7%;
+  background-color: #18191e;
+  border-radius: 9px;
+  height: 30px;
+  width: 90px;
+  color: white;
+  border: #22252b solid 1px;
+}

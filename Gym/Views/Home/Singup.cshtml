@@ -1,0 +1,64 @@
+<body class="sing-page">
+
+    <head>
+        <link rel="stylesheet" href="../css/site2.css">
+        <script src="../js/attendance-checker.js"></script>
+    </head>
+    <br><br><br><br>
+    <div class="sing">
+        <h3 class="creat">ثبت نام کاربر جدید</h3>
+        <p id="alert"></p>
+        <p class="mail">نام</p>
+        <input id="name" type="text">
+        <br>
+        <p class="mail">نام خانوادگی</p>
+        <input id="lname" type="text">
+        <br>
+        <p id="t1">سن</p>
+        <input id="age" type="text">
+        <br>
+        <p class="mail">شماره تماس</p>
+        <input id="number" type="tel" pattern="^09\d{9}$" maxlength="11" required>
+        <br>
+        <p class="pass">تعداد جلسات</p>
+        <select id="classes">
+            <option value="12">دوازده جلسه</option>
+            <option value="16">شانزده جلسه</option>
+            <option value="20">بیست جلسه</option>
+            <option value="24">بیست و چهار جلسه</option>
+        </select>
+        <br>
+        <div class="gender-selection">
+            <label>
+                <input id="men" type="radio" name="gender" value="مرد" /> مرد
+            </label>
+            <label>
+                <input id="women" type="radio" name="gender" value="زن" /> زن
+            </label>
+            <label id="sedaSima">
+                <input id="userType" type="checkbox" value="صدا و سیما"> صدا و سیما 
+            </label>
+        </div>
+        <button onclick="up()" class="sbtn">ثبت نام</button>
+
+    </div>
+    <div id="card-message" style="display: none;">
+        <div id="cardd">
+            <br>
+            <p>لطفا کارت را نزدیک کنید</p>
+            <div id="countdown"></div>
+            <p></p>
+        </div>
+    </div>
+
+    <div id="overlay">
+        <div id="loader"></div>
+    </div>
+    <div id="messageBox" style="display: none;">
+        <p id="secMessage"></p>
+    </div>
+
+    <script src="../js/axios.js"></script>
+    <script src="../js/site2.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jalaali-js/dist/jalaali.min.js"></script>
+</body>

@@ -1,0 +1,110 @@
+<div class="search-container">
+    <input type="text" id="search-input" placeholder="شناسه کاربری یا فامیل را وارد کنید">
+    <button id="search-button" onclick="search()">
+        <link rel="stylesheet" href="../css/main.css">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16z" stroke="#555" stroke-width="2" />
+            <path d="M21 21l-4.35-4.35" stroke="#555" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+    </button>
+</div>
+<div id="cont">
+</div>
+<div id="messageBox" style="display: none;"></div>
+<script src="../js/attendance-checker.js"></script>
+<script src="../js/axios.js"></script>
+<script>
+    function search() {
+        let idValue = document.getElementById("search-input").value
+
+        if (idValue === "") {
+            alert("لطفا شناسه کاربری را وارد کنید")
+        }
+        if(!isNaN(idValue)){
+            axios({
+                url: "../home/findId",
+                method: "get",
+                params: { id: idValue }
+             })
+            .then(res => {
+                if (res.data) {
+                     f1([res.data])
+                }
+                else {
+                     console.log("کاربر یافت نشد")
+                }
+            })
+            .catch(err => {
+                console.log(err)
+                alert("شناسه کاربری یافت نشد")
+            })
+        }
+        else {
+            axios({
+                url:"../home/findByName",
+                method:"post",
+                params: { name : idValue }
+            })
+            .then(res => {
+                if(res.data) {
+                    f1(res.data)
+                }
+                else {
+                    console.log("کاربر یافت نشد");
+                }
+            })
+            .catch(err => {
+                console.log(err.message)
+                alert("کاربر یافت نشد.")
+            })
+        }
+    }
+    function f1(list) {
+        // دسترسی به کانتینر اصلی
+        let main = document.getElementById("cont");
+
+        let items = document.querySelectorAll(".item");
+        items.forEach(item => item.remove());
+        // پیمایش آرایه list
+        list.forEach(x => {
+            console.log(x);
+
+            // ایجاد یک دیو جدید با کلاس item
+            let CDiv = document.createElement("div");
+            CDiv.className = "item";
+
+            // افزودن اطلاعات به CDiv
+            let pName = document.createElement("h3");
+            pName.innerText = `نام: ${x.name || "نامشخص"}`;
+
+            let pLname = document.createElement("p");
+            pLname.innerHTML = `نام خانوادگی: ${x.lname || "نامشخص"}`;
+
+            let pAge = document.createElement("p");
+            pAge.innerHTML = `سن: ${x.age || "نامشخص"}`;
+
+            let pStatus = document.createElement("p");
+            pStatus.innerHTML = `وضعیت: ${x.usertype || "نامشخص"}`;
+
+
+            CDiv.appendChild(pName);
+            CDiv.appendChild(pLname);
+            CDiv.appendChild(pAge);
+            CDiv.appendChild(pStatus);
+
+            // افزودن CDiv به main
+            main.appendChild(CDiv);
+
+            // افزودن Event Listener برای کلیک
+            CDiv.addEventListener("click", function () {
+                window.location.href = `../home/findUse?Id=${x.id}`;
+            });
+        });
+    }
+    document.addEventListener("keydown", function (event) {
+        if (event.key === "Enter") {
+            document.getElementById("search-button").click();
+        }
+    });
+
+</script>

@@ -1,0 +1,433 @@
+<link rel="stylesheet" href="../css/profile.css">
+<script src="../js/attendance-checker.js"></script>
+
+@model Gym.Models.Man
+
+<body id="profBd">
+    <div id="cont">
+        <img id="profileImg" src="../img/profile.png" alt="">
+        <div id="dTitle">
+            <h1>@Model.Name</h1>
+        </div>
+        <button onclick="AddCard()" id="AddCart">کارت</button>
+        <button onclick="showConfirmDialog()" id="delUser">حذف</button>
+        <button onclick="showEditPage()" id="EditUser">ویرایش</button>
+        <button onclick="showTamdidPage()" id="tamdidBtn">تمدید</button>
+        <div id="DCont">
+            <div id="rightD">
+                <p>فامیل</p>
+                <p>شناسه کاربری</p>
+                <p>سن</p>
+                <p>جنسیت</p>
+            </div>
+            <div>
+                <p>@Model.Lname</p>
+                <p>@Model.Id</p>
+                <p>@Model.Age</p>
+                <p>@Model.Gender</p>
+            </div>
+            <div id="leftD">
+                <p>شماره تماس</p>
+                <p>جلسات باقی مانده</p>
+                <p>تاریخ تمدید</p>
+                <p>حضور دستی</p>
+            </div>
+            <div>
+                <p>@Model.Number</p>
+                <p>@Model.Classes</p>
+                <p>@Model.Date</p>
+                <button onclick="manualPer()" id="manualPer">حضور</button>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div id="edit-box" style="display: none;">
+        <div class="confrim">
+            <button id="closeEditBox" onclick="closeEditBox()">✖</button>
+            <h5 id="BoxTitle">ویرایش اطلاعات</h5>
+            <br>
+            <input class="inputStyle" id="nameInp" type="text" placeholder="نام">
+            <br>
+            <br>
+            <input class="inputStyle" id="lnameInp" type="text" placeholder="نام خانوادگی">
+            <br><br>
+            <input class="inputStyle" id="ageInp" type="text" placeholder="سن">
+            <br><br>
+            <input class="inputStyle" id="numberInp" type="text" placeholder="شماره تماس">
+            <br><br>
+            <select id="genderInp">
+                <option value="مرد">مرد</option>
+                <option value="زن">زن</option>
+            </select>
+            <br><br>
+            <button id="closeConfrim" onclick="closeConfrim()">ثبت تغیرات</button>
+            <button id="CancelEdit" onclick="closeEditBox()">لغو</button>
+        </div>
+    </div>
+    <div id="confirm-dialog" class="dialog-overlay" style="display: none;">
+        <div class="dialog-box">
+            <p>آیا مطمئن هستید که می‌خواهید این کاربر را حذف کنید؟</p>
+            <button onclick="confirmDelete()">بله</button>
+            <button onclick="closeConfirmDialog()">خیر</button>
+        </div>
+    </div>
+    <div id="overlay">
+        <div id="loader"></div>
+    </div>
+    <div id="card-message" style="display: none;">
+        <div id="cardd">
+            <br>
+            <p>لطفا کارت را نزدیک کنید</p>
+            <br>
+            <div id="countdown"></div>
+            <p></p>
+        </div>
+    </div>
+    <div id="darkBg" style="display: none;">
+        <div id="tamdidD">
+            <p>تمدید جلسات</p>
+            <br>
+            <input id="tamdidInp" type="text">
+            <br>
+            <button onclick="tamdidjalase()" id="sabtTamdid">ثبت</button>
+            <button onclick="closeTamdidPage()" id="cancelTamdid">لغو</button>
+        </div>
+    </div>
+</body>
+<div id="messageBox" style="display: none;">
+    <p id="secMessage"></p>
+</div>
+<script src="../js/axios.js"></script>
+@* <script src="../js/attendance-checker.js"></script> *@
+<script>
+    function closeEditBox() {
+        document.getElementById("edit-box").style.display = "none";
+    }
+
+    // نمایش صفحه ویرایش
+    function showEditPage() {
+        document.getElementById("edit-box").style.display = "flex";
+    }
+
+    let idForEdit = @Model.Id;
+    const currentDate = new Date();
+    const jalaliDate = window.jalaali.toJalaali(currentDate);
+
+    // ارسال و ذخیره تغییرات
+    function closeConfrim() {
+        document.getElementById("overlay").style.visibility = "visible";
+
+        setTimeout(hideLoader, 2000);
+
+        let name = document.getElementById("nameInp").value
+        let lname = document.getElementById("lnameInp").value;
+        let age = document.getElementById("ageInp").value
+        let number = document.getElementById("numberInp").value
+        let gender = document.getElementById("genderInp").value
+        let dataToSend = {
+            id: `${idForEdit}`
+        };
+        if (name != "") dataToSend.name = name;
+        if (lname != "") dataToSend.lname = lname;
+        if (age != "") dataToSend.age = age;
+        if (number != "") dataToSend.number = number;
+        if (gender != "") dataToSend.gender = gender;
+        if (Object.keys(dataToSend).length === 0) {
+            alert("هیچ اطلاعاتی وارد نشده");
+            return;
+        }
+        else {
+            axios.post("/home/updateUser", dataToSend)
+                .then(res => {
+                    console.log(res.data)
+                    let successMes = document.getElementById("messageBox")
+                    successMes.innerText = "تغیرات ثبت شد"
+                    successMes.style.display = "block";
+                    successMes.style.padding = "0px 0px"
+                    successMes.style.opacity = "0";
+
+                    setTimeout(() => {
+                        successMes.style.padding = "40px 30px"
+                        successMes.style.opacity = "1";
+                    }, 50)
+
+                    setTimeout(() => {
+                        successMes.style.padding = "0px 0px"
+                        successMes.style.opacity = "0";
+
+                        setTimeout(() => {
+                            successMes.style.display = "none";
+                        }, 3000);
+                    }, 3000)
+                    document.getElementById("edit-box").style.display = "none";
+                    setTimeout(reloadPage, 3000)
+                    function reloadPage() {
+                        location.reload()
+                    }
+                })
+                .catch(err => console.log(err));
+        }
+
+        function hideLoader() {
+            document.getElementById("overlay").style.visibility = "hidden";
+        }
+    }
+
+    // بستن صفحه ویرایش
+    function closePageEdit() {
+        document.getElementById("edit-box").style.display = "none";
+    }
+
+    // نمایش دیالوگ تایید
+    function showConfirmDialog() {
+        document.getElementById("confirm-dialog").style.display = "flex";
+    }
+
+    // بستن دیالوگ تایید
+    function closeConfirmDialog() {
+        document.getElementById("confirm-dialog").style.display = "none";
+    }
+
+    // تایید و ارسال درخواست حذف
+    function confirmDelete() {
+        closeConfirmDialog(); // بستن دیالوگ
+
+        let idDel = @Model.Id; // مقدار شناسه کاربر
+        axios({
+            url: "../home/kkklll",
+            method: "post",
+            headers: {
+                'Content-Type': 'application/json' // ارسال به صورت JSON
+            },
+            data: idDel // ارسال مستقیم مقدار
+        })
+            .then(res => {
+                console.log(res.data);
+                if (res.data.success) {
+                    window.location.href = "../home/index2";
+                } else {
+                    alert(res.data.message);
+                }
+            })
+            .catch(err => {
+                console.log(err);
+                alert("خطا در عملیات حذف.");
+            });
+    }
+    async function AddCard() {
+        gg = false; 
+        document.getElementById("card-message").style.display = "flex";
+        startCountdown(10);
+
+        function startCountdown(durationInSeconds) {
+            const countdownE1 = document.getElementById("countdown");
+            let timeLeft = durationInSeconds;
+
+            countdownE1.innerText = timeLeft;
+
+            const timer = setInterval(() => {
+                timeLeft--;
+                countdownE1.innerText = timeLeft;
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                }
+            }, 1000)
+        }
+        const cardUID = await waitForUid(); // متوقف می‌شود تا کارت خوانده شود
+        if (!cardUID) {
+            document.getElementById("card-message").style.display = "none";
+            alert.innerText = "کارت شناسایی خوانده نشد. لطفاً دوباره تلاش کنید.";
+            alert.style.color = "brown";
+            return;
+        }
+        async function waitForUid(timeoutMs = 10000, intervalMs = 1000) {
+            const start = Date.now();
+
+            while (Date.now() - start < timeoutMs) {
+                try {
+                    console.log("منتظر کارت...");
+                    const res = await fetch("http://localhost:5048/api/rfid");
+                    const uid = await res.text();
+
+                    if (uid && uid.trim() !== "") {
+                        document.getElementById("overlay").style.visibility = "visible";
+                        setTimeout(() => {
+                            document.getElementById("overlay").style.visibility = "hidden";
+                        }, 2000);
+                        console.log(uid.trim());
+                        document.getElementById("card-message").style.display = "none";
+                        gg = true;
+                        return uid.trim();
+                    }
+                } catch (err) {
+                    console.error("خطا در دریافت UID:", err);
+                }
+
+                await new Promise(resolve => setTimeout(resolve, intervalMs));
+            }
+
+            // اگر زمان تمام شد و UID دریافت نشد
+            let successMes = document.getElementById("messageBox")
+            successMes.innerText = "هیچ کارتی خوانده نشد";
+            successMes.style.display = "block";
+            successMes.style.padding = "0px 0px"
+            successMes.style.opacity = "0";
+
+            setTimeout(() => {
+                successMes.style.padding = "40px 30px"
+                successMes.style.opacity = "1";
+            }, 50)
+
+            setTimeout(() => {
+                successMes.style.padding = "0px 0px"
+                successMes.style.opacity = "0";
+
+                setTimeout(() => {
+                    successMes.style.display = "none";
+                }, 3000);
+            }, 3000)
+            document.getElementById("edit-box").style.display = "none";
+            console.log("هیچ UID‌ای خوانده نشد.");
+            gg = true;
+            return null;
+        }
+        let id = @Model.Id;
+        axios({
+            url: "/home/editUid",
+            method: "post",
+            params: { uid: cardUID, id: id }
+        })
+            .then(res => {
+                console.log(res.data)
+                let successMes = document.getElementById("messageBox")
+                successMes.innerText = res.data;
+                successMes.style.display = "block";
+                successMes.style.padding = "0px 0px"
+                successMes.style.opacity = "0";
+
+                setTimeout(() => {
+                    successMes.style.padding = "40px 30px"
+                    successMes.style.opacity = "1";
+                }, 50)
+
+                setTimeout(() => {
+                    successMes.style.padding = "0px 0px"
+                    successMes.style.opacity = "0";
+
+                    setTimeout(() => {
+                        successMes.style.display = "none";
+                    }, 3000);
+                }, 3000)
+                document.getElementById("edit-box").style.display = "none";
+            })
+            .catch(err => console.log(err.message));
+    }
+    function tamdidjalase() {
+        let newClasses = document.getElementById("tamdidInp").value
+        let id = @Model.Id
+
+        if (newClasses != null) {
+            axios({
+                url: "/home/tamdidJalase",
+                method: "post",
+                params: { id: id, newClasses: newClasses }
+            })
+                .then(res => {
+                    console.log(res.data);
+                    document.getElementById("darkBg").style.display = "none";
+                    let successMes = document.getElementById("messageBox")
+                    successMes.innerText = res.data;
+                    successMes.style.display = "block";
+                    successMes.style.padding = "0px 0px"
+                    successMes.style.opacity = "0";
+
+                    setTimeout(() => {
+                        successMes.style.padding = "40px 30px"
+                        successMes.style.opacity = "1";
+                    }, 50)
+
+                    setTimeout(() => {
+                        successMes.style.padding = "0px 0px"
+                        successMes.style.opacity = "0";
+
+                        setTimeout(() => {
+                            successMes.style.display = "none";
+                        }, 3000);
+                    }, 3000)
+                    setTimeout(reloadPage, 2000)
+                    function reloadPage() {
+                        location.reload()
+                    }
+                })
+                .catch(err => console.log(err.message));
+        }
+    }
+    function showTamdidPage() {
+        document.getElementById("darkBg").style.display = "flex";
+    }
+    function closeTamdidPage() {
+        document.getElementById("darkBg").style.display = "none";
+    }
+    function manualPer() {
+        let presetCount = 1;
+        let tedadCalass = @Model.Classes;
+        let id = @Model.Id;
+        if (tedadCalass > 0) {
+            axios({
+                url: "/home/manualPer",
+                method: "post",
+                params: { id: id, presetCount: presetCount }
+            })
+                .then(res => {
+                    console.log(res.data);
+                    document.getElementById("darkBg").style.display = "none";
+                    let successMes = document.getElementById("messageBox")
+                    successMes.innerText = res.data;
+                    successMes.style.display = "block";
+                    successMes.style.padding = "0px 0px"
+                    successMes.style.opacity = "0";
+
+                    setTimeout(() => {
+                        successMes.style.padding = "40px 30px"
+                        successMes.style.opacity = "1";
+                    }, 50)
+
+                    setTimeout(() => {
+                        successMes.style.padding = "0px 0px"
+                        successMes.style.opacity = "0";
+
+                        setTimeout(() => {
+                            successMes.style.display = "none";
+                        }, 3000);
+                    }, 3000)
+                    setTimeout(reloadPage, 2000)
+                    function reloadPage() {
+                        location.reload()
+                    }
+                })
+                .catch(err => console.log(err.message));
+        }
+        else {
+            document.getElementById("darkBg").style.display = "none";
+            let successMes = document.getElementById("messageBox")
+            successMes.innerText = "تعداد جلسات به پایان رسیده است.";
+            successMes.style.display = "block";
+            successMes.style.padding = "0px 0px"
+            successMes.style.opacity = "0";
+
+            setTimeout(() => {
+                successMes.style.padding = "40px 30px"
+                successMes.style.opacity = "1";
+            }, 50)
+
+            setTimeout(() => {
+                successMes.style.padding = "0px 0px"
+                successMes.style.opacity = "0";
+
+                setTimeout(() => {
+                    successMes.style.display = "none";
+                }, 3000);
+            }, 3000)
+        }
+    }
+</script>

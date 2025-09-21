@@ -1,0 +1,34 @@
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="~/css/site.css" />
+    <script src="~/js/site.js"></script>
+</head>
+<body class="index-bg">
+    <div class="main-index-div">
+        <div id="Dtitle"></div>
+        <h2 id="title">ورود</h2>
+        <div id="mainD-inp">
+            <div class="Dinp">
+                <input id="UsernameInp" type="text" placeholder="نام کاربری خود را وارد کنید">
+            </div>
+            <br>
+            <div class="Dinp">
+                <input id="Sing-inp2" type="text" placeholder="رمز خود را وارد کنید">
+            </div>
+        </div>
+        <div id="singDiv">
+            <button onclick="SingIn()" id="singBtn">ورود</button>
+        </div>
+    </div>
+
+    <div id="overlay">
+        <div id="loader"></div>
+    </div>
+
+    <script src="~/js/axios.js"></script>
+</body>
+</html>

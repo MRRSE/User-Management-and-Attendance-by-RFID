@@ -1,0 +1,236 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+@font-face {
+  font-family: 'MyCustomFont';
+  src:url('../fonts/shabnam-font-v5.0.1/Shabnam-Medium.woff') format('woff');
+}
+
+body {
+  font-family: 'MyCustomFont', sans-serif;
+  background-color: #16181c;
+  background-image: none;
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+.logo {
+  height: 50px;
+  width: auto;
+  display: block; 
+}
+
+.navbar-brand {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sing {
+  margin: auto;
+  height: 650px;
+  width: 40%;
+  border-radius: 20px;
+  background-color: #2A2A2A;
+  box-shadow: 0px 8px 16px rgb(0 , 0 , 0 , 0.1);
+  display: flex;
+  flex-direction: column;
+  margin-top: -5%;
+}
+
+.singUp {
+  margin: auto;
+  height: 400px;
+  width: 500px;
+  border-radius: 20px;
+  background-color: white;
+  box-shadow: 0px 8px 16px rgb(0 , 0 , 0 , 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+#name , #classes , #lname ,#number , #age{
+  border-radius: 5px;
+  width: 400px;
+  border: 1px solid #444444;
+  margin-right: 10%;
+  outline: none;
+  text-align: center;
+  color: #E0E0E0;
+  background-color: #333333;
+  outline: black;
+}
+
+.sinp:focus , #pass:focus , #pass2:focus {
+  border: 1px solid black;
+}
+
+.sing-page {
+  background-color: #1C1C1C;
+}
+
+.well {
+  margin-right: 25%;
+  margin-top: 3%;
+}
+
+.creat {
+  margin-right: 30%;
+  margin-top: 3%;
+  color: #FFFFFF;
+}
+
+.sbtn {
+  width: 80px;
+  height: 40px;
+  margin: auto;
+  background-color: #555555;
+  color: white;
+  border-radius: 5px;
+  outline: none;
+  border: 1px solid rgb(129, 129, 129);
+  scale: 1;
+  transition: scale 0.2s ease;
+  color: #E0E0E0;
+}
+
+.sbtn:hover {
+  scale: 1.1;
+}
+
+.sbtn:active{
+  background-color: white;
+  color: black;
+  border: black 1px solid;
+  scale: 0.8;
+}
+.mail , .pass , #alert ,#t1 {
+  margin-right: 10%;
+  color: #FFFFFF;
+}
+.gender-selection {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-top: 20px;
+}
+.gender-selection label {
+  font-weight: bold;
+  font-size: 16px;
+  margin-right: 10%;
+  color: #FFFFFF;
+}
+#overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  visibility: hidden;
+}
+
+#loader {
+  border: 6px solid #f3f3f3;
+  border-top: 6px solid #5e5f5f;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+#name:focus , #lname:focus , #number:focus , #classes:focus , #age:focus {
+  border: 1px solid white;
+}
+
+#data-table {
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  border-collapse: separate;
+  padding: 5px;
+}
+
+#data-table th , #data-table td {
+  padding: 10px;
+  text-align: center;
+}
+#logo{
+  margin-left: 50%;
+}
+
+.animated-dropdown {
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+#card-message {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* پس‌زمینه نیمه شفاف */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  border: 1px solid black;
+}
+#cardd {
+  background-color: rgb(255, 255, 255);
+  padding: 20px 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+#sedaSima {
+  color: white;
+}
+
+#messageBox {
+  position: fixed;
+  top: 70px;
+  left: 9%;
+  transform: translateX(-50%);
+  background-color: #2e2e2e;
+  color: white;
+  padding: 15px 25px;
+  border-radius: 10px;
+  font-size: 16px;
+  z-index: 1000;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  transition: all 0.5s ease;
+}
