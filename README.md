@@ -25,7 +25,7 @@ It combines **RFID technology** with a **.NET Core backend** and **SQL Server da
 ## Getting Started
 1. Clone the repository:
    ```bash
-   git clone https://github.com/username/repository-name.git
+   git clone https://github.com/MRRSE/User-Management-and-Attendance-by-RFID.git
 
 2. Update the database connection string in appsettings.json
 
