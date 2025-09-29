@@ -54,7 +54,7 @@ public class HomeController : Controller
     [HttpPost]
     public string newPerson(string name, string lname, string age, string classes, string gender, string Pnumber, string registrationDate, string CardUID , string userType)
     {
-        var currentDate = DateTime.Now.ToShortPersianDateString(); 
+        var currentDate = DateTime.Now.ToShortPersianDateString();
 
 
         var exist = db.Men.FirstOrDefault(x => x.Uid == CardUID);
@@ -272,6 +272,26 @@ public IActionResult findByName(string name)
         {
             if (currentClasses > 0)
             {
+                if (FindByuid.Status == true)
+                {
+                    var findLog = db.UserLogs.Where(u => u.Userid == FindByuid.Id && u.Exittime == null).FirstOrDefault();
+                    findLog.Exittime = "byebye";
+                    findLog.Exitdate = DateTime.Now;
+                    FindByuid.Status = false;
+                    db.SaveChanges();
+                }
+                else if(FindByuid.Status == false)
+                {
+                    FindByuid.Status = true;
+                    UserLog userLog = new UserLog
+                    {
+                        Userid = FindByuid.Id,
+                        Enterytime = "ok",
+                        Enterydate = DateTime.Now
+                    };
+                    db.UserLogs.Add(userLog);
+                    db.SaveChanges();
+                }
                 currentClasses = currentClasses - 1;
                 string saveDate = DateTime.Now.ToShortDateString();
                 FindByuid.Classes = currentClasses.ToString();
