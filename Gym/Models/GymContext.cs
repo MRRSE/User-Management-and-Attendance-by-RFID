@@ -19,6 +19,8 @@ public partial class GymContext : DbContext
 
     public virtual DbSet<Man> Men { get; set; }
 
+    public virtual DbSet<UserLog> UserLogs { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
         => optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=gym;Integrated Security=True;TrustServerCertificate=True;");
@@ -78,6 +80,7 @@ public partial class GymContext : DbContext
                 .HasMaxLength(20)
                 .IsFixedLength()
                 .HasColumnName("number");
+            entity.Property(e => e.Status).HasColumnName("status");
             entity.Property(e => e.Uid)
                 .HasMaxLength(50)
                 .IsUnicode(false)
@@ -87,6 +90,30 @@ public partial class GymContext : DbContext
                 .HasMaxLength(10)
                 .IsFixedLength()
                 .HasColumnName("usertype");
+        });
+
+        modelBuilder.Entity<UserLog>(entity =>
+        {
+            entity.HasKey(e => e.Logid);
+
+            entity.ToTable("user_logs");
+
+            entity.Property(e => e.Logid).HasColumnName("logid");
+            entity.Property(e => e.Enterydate)
+                .HasColumnType("datetime")
+                .HasColumnName("enterydate");
+            entity.Property(e => e.Enterytime)
+                .HasMaxLength(10)
+                .IsFixedLength()
+                .HasColumnName("enterytime");
+            entity.Property(e => e.Exitdate)
+                .HasColumnType("datetime")
+                .HasColumnName("exitdate");
+            entity.Property(e => e.Exittime)
+                .HasMaxLength(10)
+                .IsFixedLength()
+                .HasColumnName("exittime");
+            entity.Property(e => e.Userid).HasColumnName("userid");
         });
 
         OnModelCreatingPartial(modelBuilder);

@@ -26,4 +26,6 @@ public partial class Man
     public string? Usertype { get; set; }
 
     public string? Lastsing { get; set; }
+
+    public bool? Status { get; set; }
 }

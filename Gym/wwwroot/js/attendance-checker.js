@@ -19,7 +19,7 @@ let gg = true;
                         message = res.data;
                         showMessage()
                     })
-                    .catch(err => console.log(err.message))
+                    .catch(err => console.log(err))
                 }       
             }
     
