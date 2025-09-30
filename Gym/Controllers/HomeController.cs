@@ -270,8 +270,7 @@ public IActionResult findByName(string name)
         int currentClasses;
         if (int.TryParse(FindByuid.Classes, out currentClasses))
         {
-            if (currentClasses > 0)
-            {
+
                 if (FindByuid.Status == true)
                 {
                     var findLog = db.UserLogs.Where(u => u.Userid == FindByuid.Id && u.Exittime == null).FirstOrDefault();
@@ -299,11 +298,6 @@ public IActionResult findByName(string name)
                 man.Lastsing = saveDate;
                 db.SaveChanges();
                 return $"کاربر : {FindByuid.Lname} وارد شد .";
-            }
-            else
-            {
-                return $"تعداد جلسات  {FindByuid.Lname} به پایان رسیده است! ";
-            }
         }
         return "err";
     }
