@@ -1,0 +1,54 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/userlogs.css">
+</head>
+
+<body>
+    <div id="cont">
+        <div id="overlay">
+            <div id="loader"></div>
+        </div>
+        <div id="main-div">
+            <div id="d-filter">
+                <select id="genderFilter" onchange="filterGender()">
+                    <option value="all">همه</option>
+                    <option value="مرد">آقایان</option>
+                    <option value="زن">خانوم ها</option>
+                    <option value="جلسات">نیاز به تمدید</option>
+                </select>
+            </div>
+            <div class="search-container">
+                <input type="text" id="searchInp" class="search-input" placeholder="جستجو کاربران">
+                <button class="search-button" onclick="find()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16z" stroke="#555" stroke-width="2" />
+                        <path d="M21 21l-4.35-4.35" stroke="#555" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                </button>
+            </div>
+            <div>
+                <table id="data-table">
+                    <thead>
+                        <tr>
+                            <th>شناسه کاربری</th>
+                            <th>نام</th>
+                            <th>نام خانوادگی</th>
+                            <th>ساعت ورود</th>
+                            <th>ساعت خروج</th>
+                        </tr>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <button id="load-more" onclick="load()">▼</button>
+        </div>
+        <div id="messageBox" style="display: none;"></div>
+    </div>
+</body>
+
+</html>

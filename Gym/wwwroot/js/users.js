@@ -83,16 +83,8 @@ function f1(list) {
         let cell7 = document.createElement("th");
         cell7.textContent = x.classes;
         cell7.classList = "classes";
-        let cell9 = document.createElement("th");
-        cell9.textContent = x.date ? x.date.trim() : "تاریخ نامشخص";
 
-        let cell8 = document.createElement("th");
-        cell8.textContent = x.usertype;
-        cell8.classList = "classes";
-
-        cell9.className = "row1";
-        
-        
+    
 
         item.appendChild(cell1);
         item.appendChild(cell2);
@@ -100,8 +92,6 @@ function f1(list) {
         item.appendChild(cell4);
         item.appendChild(cell5);
         item.appendChild(cell7);
-        item.appendChild(cell8);
-        item.appendChild(cell9);
 
         t.appendChild(item);
     });
