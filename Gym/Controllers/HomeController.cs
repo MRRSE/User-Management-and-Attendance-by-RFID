@@ -57,7 +57,7 @@ public class HomeController : Controller
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
     [HttpPost]
-    public string newPerson(string name, string lname, string age, string classes, string gender, string Pnumber, string CardUID )
+    public string newPerson(string name, string lname, string age, string classes, string gender, string Pnumber, string CardUID)
     {
         var currentDate = DateTime.Now.ToShortPersianDateString();
 
@@ -120,10 +120,10 @@ public class HomeController : Controller
         .Skip(skip)
         .Take(take)
         .ToList();
-    if (expiredUsers.Any())
-        return Ok(expiredUsers);
-    else
-        return NotFound("هیچ کاربری با جلسات صفر یافت نشد");
+        if (expiredUsers.Any())
+            return Ok(expiredUsers);
+        else
+            return NotFound("هیچ کاربری با جلسات صفر یافت نشد");
     }
 
     [HttpPost]
@@ -183,19 +183,19 @@ public class HomeController : Controller
             return NotFound();
         }
     }
-[HttpPost]
-public IActionResult findByName(string name)
-{
-    var user = db.Men.Where(u => u.Lname.Contains(name)).ToList();
-    if (user != null)
+    [HttpPost]
+    public IActionResult findByName(string name)
     {
-        return Ok(user);
+        var user = db.Men.Where(u => u.Lname.Contains(name)).ToList();
+        if (user != null)
+        {
+            return Ok(user);
+        }
+        else
+        {
+            return NotFound();
+        }
     }
-    else
-    {
-        return NotFound();
-    }
-}
 
     [HttpPost]
     public IActionResult kkklll([FromBody] long id)
@@ -275,33 +275,35 @@ public IActionResult findByName(string name)
         if (int.TryParse(FindByuid.Classes, out currentClasses))
         {
 
-                if (FindByuid.Status == true)
-                {
-                    var findLog = db.UserLogs.Where(u => u.Userid == FindByuid.Id && u.Exittime == null).FirstOrDefault();
-                    findLog.Exittime = "byebye";
-                    findLog.Exitdate = DateTime.Now;
-                    FindByuid.Status = false;
-                    db.SaveChanges();
-                }
-                else if(FindByuid.Status == false)
-                {
-                    FindByuid.Status = true;
-                    UserLog userLog = new UserLog
-                    {
-                        Userid = FindByuid.Id,
-                        Enterytime = "ok",
-                        Enterydate = DateTime.Now
-                    };
-                    db.UserLogs.Add(userLog);
-                    db.SaveChanges();
-                }
-                currentClasses = currentClasses - 1;
-                string saveDate = DateTime.Now.ToShortDateString();
-                FindByuid.Classes = currentClasses.ToString();
-                Man man = new Man();
-                man.Lastsing = saveDate;
+            if (FindByuid.Status == true)
+            {
+                var findLog = db.UserLogs.Where(u => u.Userid == FindByuid.Id && u.Exittime == null).FirstOrDefault();
+                findLog.Exittime = "byebye";
+                findLog.Exitdate = DateTime.Now;
+                FindByuid.Status = false;
                 db.SaveChanges();
-                return $"کاربر : {FindByuid.Lname} وارد شد .";
+            }
+            else if (FindByuid.Status == false)
+            {
+                FindByuid.Status = true;
+                UserLog userLog = new UserLog
+                {
+                    Userid = FindByuid.Id,
+                    Name = FindByuid.Name,
+                    Lname = FindByuid.Lname,
+                    Enterytime = "ok",
+                    Enterydate = DateTime.Now
+                };
+                db.UserLogs.Add(userLog);
+                db.SaveChanges();
+            }
+            currentClasses = currentClasses - 1;
+            string saveDate = DateTime.Now.ToShortDateString();
+            FindByuid.Classes = currentClasses.ToString();
+            Man man = new Man();
+            man.Lastsing = saveDate;
+            db.SaveChanges();
+            return $"کاربر : {FindByuid.Lname} وارد شد .";
         }
         return "err";
     }
@@ -429,5 +431,21 @@ public IActionResult findByName(string name)
             return "تغیرات اعمال شد.";
         }
         return "خطایی رخ داد!";
+    }
+    public IActionResult GetLogss(int take, int skip)
+    {
+        var logs = db.UserLogs
+        .Skip(skip)
+        .Take(take)
+        .ToList();
+
+        var result = logs.Select(x => new {
+        x.Userid,
+        x.Name,
+        x.Lname,
+        EnteryDate = x.Enterydate?.ToShortPersianDateTimeString(), // ← شمسی
+        ExitDate = x.Exitdate?.ToShortPersianDateTimeString()      // ← شمسی
+    });
+        return Ok(result);
     }
 }

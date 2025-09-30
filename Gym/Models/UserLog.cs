@@ -16,4 +16,8 @@ public partial class UserLog
     public DateTime? Enterydate { get; set; }
 
     public DateTime? Exitdate { get; set; }
+
+    public string? Name { get; set; }
+
+    public string? Lname { get; set; }
 }

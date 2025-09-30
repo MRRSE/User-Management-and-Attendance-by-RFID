@@ -13,6 +13,7 @@ function load() {
             .then(res => {
                 f1(res.data);
                 skip += take;
+                console.log(res.data)
             })
             .catch(err => console.log(err.message));
     }
@@ -60,9 +61,18 @@ function load() {
 }
 
 function f1(list) {
+
     let t = document.querySelector("#data-table tbody");
     list.forEach(x => {
         let item = document.createElement("tr");
+
+        let ssss;
+        if(x.status == true){
+            ssss = "آنلاین";
+        }
+        else{
+            ssss = "افلاین";
+        }
 
         let cell1 = document.createElement("th");
         cell1.textContent = x.id;
@@ -77,12 +87,14 @@ function f1(list) {
         let cell5 = document.createElement("th");
         cell5.textContent = x.gender;
         cell5.className = "row1";
-        let cell6 = document.createElement("th");
-        cell6.textContent = x.Clases;
 
         let cell7 = document.createElement("th");
         cell7.textContent = x.classes;
-        cell7.classList = "classes";
+        cell7.className = "classes";
+
+        let cell8 = document.createElement("th");
+        cell8.textContent = ssss;
+        cell8.className = "row1";
 
     
 
@@ -92,6 +104,7 @@ function f1(list) {
         item.appendChild(cell4);
         item.appendChild(cell5);
         item.appendChild(cell7);
+        item.appendChild(cell8);
 
         t.appendChild(item);
     });

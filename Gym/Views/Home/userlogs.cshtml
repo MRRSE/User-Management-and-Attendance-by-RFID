@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="../css/userlogs.css">
+    <script src="../js/attendance-checker.js"></script>
 </head>
 
 <body>
@@ -15,7 +16,7 @@
         <div id="main-div">
             <div id="d-filter">
                 <select id="genderFilter" onchange="filterGender()">
-                    <option value="all">همه</option>
+                    <option value="all">تاریخ</option>
                     <option value="مرد">آقایان</option>
                     <option value="زن">خانوم ها</option>
                     <option value="جلسات">نیاز به تمدید</option>
@@ -50,5 +51,6 @@
         <div id="messageBox" style="display: none;"></div>
     </div>
 </body>
-
+<script src="../js/userslog.js"></script>
+<script src="../js/axios.js"></script>
 </html>
