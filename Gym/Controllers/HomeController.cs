@@ -46,13 +46,18 @@ public class HomeController : Controller
         return View();
     }
 
+    public IActionResult userlogs()
+    {
+        return View();
+    }
+
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
     [HttpPost]
-    public string newPerson(string name, string lname, string age, string classes, string gender, string Pnumber, string registrationDate, string CardUID , string userType)
+    public string newPerson(string name, string lname, string age, string classes, string gender, string Pnumber, string CardUID )
     {
         var currentDate = DateTime.Now.ToShortPersianDateString();
 
@@ -74,7 +79,6 @@ public class HomeController : Controller
             man.Number = Pnumber;
             man.Date = currentDate;
             man.Uid = CardUID;
-            man.Usertype = userType;
 
             db.Men.Add(man);
             db.SaveChanges(); // بعد از این خط، man.Id مقدار می‌گیره

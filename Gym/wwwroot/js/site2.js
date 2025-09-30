@@ -7,12 +7,10 @@ async function up() {
   let age = document.getElementById("age").value;
   let classes = document.getElementById("classes").value;
   let Pnumber = document.getElementById("number").value;
-  let userType = document.getElementById("userType")
+  let calssesConverted = Number(classes);
   let alert = document.getElementById("alert");
   let radios = document.getElementsByName("gender");
   let genderValue = "";
-  let typeValue;
-
       // گرفتن جنسیت
   for (let i = 0; i < radios.length; i++) {
     if (radios[i].checked) {
@@ -61,14 +59,6 @@ async function up() {
     alert.style.color = "brown";
     return;
   }
-
-  if (userType.checked){
-    typeValue="صدا و سیما";
-  }
-  else {
-    typeValue ="کاربر فرعی";
-  }
-
   // ارسال اطلاعات با axios
   axios({
     url: "/home/newPerson",
@@ -77,12 +67,10 @@ async function up() {
       name: name,
       lname: lname,
       age: age,
-      classes: classes,
+      classes: calssesConverted,
       gender: genderValue,
       Pnumber: Pnumber,
-      registrationDate: currentDate,
       cardUID: cardUID,
-      userType: typeValue
     }
   })
     .then(res => {

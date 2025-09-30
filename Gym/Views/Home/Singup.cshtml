@@ -20,13 +20,8 @@
         <p class="mail">شماره تماس</p>
         <input id="number" type="tel" pattern="^09\d{9}$" maxlength="11" required>
         <br>
-        <p class="pass">تعداد جلسات</p>
-        <select id="classes">
-            <option value="12">دوازده جلسه</option>
-            <option value="16">شانزده جلسه</option>
-            <option value="20">بیست جلسه</option>
-            <option value="24">بیست و چهار جلسه</option>
-        </select>
+        <p class="pass">ساعات کاری را وارد کنید</p>
+        <input type="text" id="classes">
         <br>
         <div class="gender-selection">
             <label>
@@ -34,9 +29,6 @@
             </label>
             <label>
                 <input id="women" type="radio" name="gender" value="زن" /> زن
-            </label>
-            <label id="sedaSima">
-                <input id="userType" type="checkbox" value="صدا و سیما"> صدا و سیما 
             </label>
         </div>
         <button onclick="up()" class="sbtn">ثبت نام</button>

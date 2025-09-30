@@ -19,13 +19,11 @@ public partial class Man
 
     public string? Classes { get; set; }
 
-    public string? Date { get; set; }
-
     public string? Uid { get; set; }
 
-    public string? Usertype { get; set; }
-
     public string? Lastsing { get; set; }
+
+    public string? Date { get; set; }
 
     public bool? Status { get; set; }
 }

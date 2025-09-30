@@ -37,23 +37,27 @@ public partial class GymContext : DbContext
             entity.Property(e => e.Accessibility).HasColumnName("accessibility");
             entity.Property(e => e.Password)
                 .HasMaxLength(50)
+                .IsFixedLength()
                 .HasColumnName("password");
             entity.Property(e => e.Username)
                 .HasMaxLength(50)
+                .IsFixedLength()
                 .HasColumnName("username");
         });
 
         modelBuilder.Entity<Man>(entity =>
         {
+            entity.HasKey(e => e.Id).HasName("PK_man");
+
             entity.ToTable("men");
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Age)
-                .HasMaxLength(10)
+                .HasMaxLength(50)
                 .IsFixedLength()
                 .HasColumnName("age");
             entity.Property(e => e.Classes)
-                .HasMaxLength(10)
+                .HasMaxLength(50)
                 .IsFixedLength()
                 .HasColumnName("classes");
             entity.Property(e => e.Date)
@@ -69,15 +73,15 @@ public partial class GymContext : DbContext
                 .IsFixedLength()
                 .HasColumnName("lastsing");
             entity.Property(e => e.Lname)
-                .HasMaxLength(10)
+                .HasMaxLength(50)
                 .IsFixedLength()
                 .HasColumnName("lname");
             entity.Property(e => e.Name)
-                .HasMaxLength(10)
+                .HasMaxLength(50)
                 .IsFixedLength()
                 .HasColumnName("name");
             entity.Property(e => e.Number)
-                .HasMaxLength(20)
+                .HasMaxLength(50)
                 .IsFixedLength()
                 .HasColumnName("number");
             entity.Property(e => e.Status).HasColumnName("status");
@@ -86,17 +90,13 @@ public partial class GymContext : DbContext
                 .IsUnicode(false)
                 .IsFixedLength()
                 .HasColumnName("uid");
-            entity.Property(e => e.Usertype)
-                .HasMaxLength(10)
-                .IsFixedLength()
-                .HasColumnName("usertype");
         });
 
         modelBuilder.Entity<UserLog>(entity =>
         {
             entity.HasKey(e => e.Logid);
 
-            entity.ToTable("user_logs");
+            entity.ToTable("user_log");
 
             entity.Property(e => e.Logid).HasColumnName("logid");
             entity.Property(e => e.Enterydate)
