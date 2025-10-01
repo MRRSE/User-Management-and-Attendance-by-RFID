@@ -9,6 +9,7 @@ using System.IO.Ports;
 using Microsoft.Extensions.ObjectPool;
 using Microsoft.AspNetCore.Components.Web;
 using System.Net.NetworkInformation;
+using System.Xml.Linq;
 
 namespace Gym.Controllers;
 
@@ -434,18 +435,55 @@ public class HomeController : Controller
     }
     public IActionResult GetLogss(int take, int skip)
     {
+        var logs = db.UserLogs.OrderByDescending(l => l.Logid)
+        .Skip(skip)
+        .Take(take)
+        .ToList();
+
+        var result = logs.Select(x => new
+        {
+            x.Userid,
+            x.Name,
+            x.Lname,
+            EnteryDate = x.Enterydate?.ToShortPersianDateTimeString(), // ← شمسی
+            ExitDate = x.Exitdate?.ToShortPersianDateTimeString()      // ← شمسی
+        });
+        return Ok(result);
+    }
+    public IActionResult onlineLogs(int take, int skip)
+    {
+        var logs = db.UserLogs.Where(l => l.Exitdate == null)
+        .OrderByDescending(l => l.Logid)
+        .Skip(skip)
+        .Take(take)
+        .ToList();
+
+        var result = logs.Select(x => new
+        {
+            x.Userid,
+            x.Name,
+            x.Lname,
+            EnteryDate = x.Enterydate?.ToShortPersianDateTimeString(), // ← شمسی
+            ExitDate = x.Exitdate?.ToShortPersianDateTimeString()      // ← شمسی
+        });
+        return Ok(result);
+    }
+
+    public IActionResult oldLogs(int take, int skip)
+    {
         var logs = db.UserLogs
         .Skip(skip)
         .Take(take)
         .ToList();
 
-        var result = logs.Select(x => new {
-        x.Userid,
-        x.Name,
-        x.Lname,
-        EnteryDate = x.Enterydate?.ToShortPersianDateTimeString(), // ← شمسی
-        ExitDate = x.Exitdate?.ToShortPersianDateTimeString()      // ← شمسی
-    });
+        var result = logs.Select(x => new
+        {
+            x.Userid,
+            x.Name,
+            x.Lname,
+            EnteryDate = x.Enterydate?.ToShortPersianDateTimeString(), // ← شمسی
+            ExitDate = x.Exitdate?.ToShortPersianDateTimeString()      // ← شمسی
+        });
         return Ok(result);
     }
 }
