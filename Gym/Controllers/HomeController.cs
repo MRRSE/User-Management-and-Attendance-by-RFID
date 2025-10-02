@@ -80,6 +80,7 @@ public class HomeController : Controller
             man.Number = Pnumber;
             man.Date = currentDate;
             man.Uid = CardUID;
+            man.Status = false;
 
             db.Men.Add(man);
             db.SaveChanges(); // بعد از این خط، man.Id مقدار می‌گیره
@@ -272,39 +273,30 @@ public class HomeController : Controller
             return "شناسه یافت نشد.";
         }
 
-        int currentClasses;
-        if (int.TryParse(FindByuid.Classes, out currentClasses))
+        if (FindByuid.Status == false)
         {
-
-            if (FindByuid.Status == true)
+            FindByuid.Status = true;
+            UserLog userLog = new UserLog
             {
-                var findLog = db.UserLogs.Where(u => u.Userid == FindByuid.Id && u.Exittime == null).FirstOrDefault();
-                findLog.Exittime = "byebye";
-                findLog.Exitdate = DateTime.Now;
-                FindByuid.Status = false;
-                db.SaveChanges();
-            }
-            else if (FindByuid.Status == false)
-            {
-                FindByuid.Status = true;
-                UserLog userLog = new UserLog
-                {
-                    Userid = FindByuid.Id,
-                    Name = FindByuid.Name,
-                    Lname = FindByuid.Lname,
-                    Enterytime = "ok",
-                    Enterydate = DateTime.Now
-                };
-                db.UserLogs.Add(userLog);
-                db.SaveChanges();
-            }
-            currentClasses = currentClasses - 1;
-            string saveDate = DateTime.Now.ToShortDateString();
-            FindByuid.Classes = currentClasses.ToString();
-            Man man = new Man();
-            man.Lastsing = saveDate;
+                Userid = FindByuid.Id,
+                Name = FindByuid.Name,
+                Lname = FindByuid.Lname,
+                Enterytime = "ok",
+                Enterydate = DateTime.Now
+            };
+            db.UserLogs.Add(userLog);
             db.SaveChanges();
-            return $"کاربر : {FindByuid.Lname} وارد شد .";
+            return $"کاربر {FindByuid.Lname} وارد شد.";
+        }
+
+        else if (FindByuid.Status == true)
+        {
+            var findLog = db.UserLogs.Where(u => u.Userid == FindByuid.Id && u.Exittime == null).FirstOrDefault();
+            findLog.Exittime = "byebye";
+            findLog.Exitdate = DateTime.Now;
+            FindByuid.Status = false;
+            db.SaveChanges();
+            return $"کاربر {findLog.Lname} خارج شد.";
         }
         return "err";
     }
@@ -485,5 +477,28 @@ public class HomeController : Controller
             ExitDate = x.Exitdate?.ToShortPersianDateTimeString()      // ← شمسی
         });
         return Ok(result);
+    }
+    public IActionResult SearchLogs(string name)
+    {
+        var logs = db.UserLogs
+        .Where(x => x.Lname == name)
+        .OrderByDescending(l => l.Logid)
+        .ToList();
+        if (logs == null)
+        {
+            return NotFound("کاربر پیدا نشد");
+        }
+        else
+        {
+            var result = logs.Select(x => new
+            {
+                x.Userid,
+                x.Name,
+                x.Lname,
+                EnteryDate = x.Enterydate?.ToShortPersianDateTimeString(), // ← شمسی
+                ExitDate = x.Exitdate?.ToShortPersianDateTimeString()      // ← شمسی
+            });
+            return Ok(result);
+        }
     }
 }

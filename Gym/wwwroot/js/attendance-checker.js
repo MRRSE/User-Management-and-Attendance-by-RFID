@@ -26,7 +26,7 @@ let gg = true;
         } catch (err) {
             console.error("❌ خطا در دریافت UID:", err);
         }
-    }, 1000);
+    }, 500);
 
 
 function showMessage(text, type = "success") {

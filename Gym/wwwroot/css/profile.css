@@ -311,10 +311,20 @@
 }
 #rightD {
   color: #929496;
+  border: none;
+  width: unset;
+  height: unset;
+  border-radius: unset;
+  padding: unset;
 }
 
 #leftD {
   color: #929496;
+  border: none;
+  width: unset;
+  height: unset;
+  border-radius: unset;
+  padding: unset;
 }
 
 .inputStyle {
@@ -359,7 +369,7 @@
 }
 
 #tamdidD p {
-  margin-right: 27%;
+  margin-right: 19%;
   color: white;
   font-size: 25px;
 }

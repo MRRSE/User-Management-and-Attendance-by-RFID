@@ -88,3 +88,30 @@ function creatRow(list) {
 
     });
 }
+function find() {
+    let searchValue = document.getElementById("searchInp").value.trim();
+
+    if (searchValue === "") {
+        alert("لطفا شناسه مورد نظر را وارد کنید")
+        return;
+    }
+        axios({
+            url:"../home/SearchLogs",
+            method:"post",
+            params: { name : searchValue }
+        })
+        .then(res => {
+            if(res.data) {
+                let t = document.querySelector("#data-table tbody");
+                t.innerHTML = "";
+                creatRow(res.data)
+            }
+            else {
+                console.log("کاربر یافت نشد");
+            }
+        })
+        .catch(err => {
+            console.log(err.message)
+            alert("کاربر یافت نشد.")
+        })
+}   

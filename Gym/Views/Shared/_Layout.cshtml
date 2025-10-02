@@ -113,20 +113,20 @@
                                 asp-action="Privacy">کاربران</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link text-light" asp-area="" asp-controller="Home"
+                                asp-action="userlogs">گزارشات</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="SingUp">ثبت
                                 نام</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-light" asp-area="" asp-controller="Home"
-                                asp-action="changePassword"> ورود</a>
+                                asp-action="changePassword">تعویض رمز</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Home"
-                                asp-action="userlogs">گزارشات</a>
-                        </li>
-                        <li class="nav-item">
+                        @* <li class="nav-item">
                             <button onclick="setingBtn()" class="setingBtn">تنظیمات</button>
-                        </li>
+                        </li> *@
                     </ul>
                     <a id="SingOut" class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">خروج</a>
                 </div>
