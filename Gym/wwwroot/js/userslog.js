@@ -78,11 +78,16 @@ function creatRow(list) {
         cell5.textContent = z.exitDate;
         cell5.className = "row1";
 
+        let cell6 = document.createElement("th");
+        cell6.textContent = z.workedhours;
+        cell6.className = "row1";
+
         item.appendChild(cell1);
         item.appendChild(cell2);
         item.appendChild(cell3);
         item.appendChild(cell4);
         item.appendChild(cell5);
+        item.appendChild(cell6);
 
         t.appendChild(item);
 

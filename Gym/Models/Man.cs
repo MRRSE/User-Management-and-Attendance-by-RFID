@@ -15,9 +15,7 @@ public partial class Man
 
     public string? Number { get; set; }
 
-    public string? Gender { get; set; }
-
-    public string? Classes { get; set; }
+    public int? Classes { get; set; }
 
     public string? Date { get; set; }
 

@@ -6,6 +6,7 @@ let gg = true;
         try {
             if(gg){
                 const res = await fetch("http://localhost:5048/api/rfid");
+                
                 const uid = await res.text();
         
                 if (uid) {
@@ -26,7 +27,7 @@ let gg = true;
         } catch (err) {
             console.error("❌ خطا در دریافت UID:", err);
         }
-    }, 500);
+    }, 200);
 
 
 function showMessage(text, type = "success") {

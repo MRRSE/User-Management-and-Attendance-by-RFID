@@ -1,5 +1,4 @@
 <link rel="stylesheet" href="../css/profile.css">
-<script src="../js/attendance-checker.js"></script>
 
 @model Gym.Models.Man
 
@@ -18,13 +17,13 @@
                 <p>فامیل</p>
                 <p>شناسه کاربری</p>
                 <p>سن</p>
-                <p>جنسیت</p>
+                <p>وضعیت</p>
             </div>
             <div>
                 <p>@Model.Lname</p>
                 <p>@Model.Id</p>
                 <p>@Model.Age</p>
-                <p>@Model.Gender</p>
+                <p id="statusP"></p>
             </div>
             <div id="leftD">
                 <p>شماره تماس</p>
@@ -98,11 +97,19 @@
     <p id="secMessage"></p>
 </div>
 <script src="../js/axios.js"></script>
-@* <script src="../js/attendance-checker.js"></script> *@
+<script src="../js/attendance-checker.js"></script>
 <script>
-    function closeEditBox() {
-        document.getElementById("edit-box").style.display = "none";
-    }
+let nowStatus = @Model.Status.ToString().ToLower(); // true یا false
+let ppp = document.getElementById("statusP");
+
+if (nowStatus === "true") {
+    ppp.textContent = "آنلاین";
+    console.log("status: true");
+} else {
+    ppp.textContent = "آفلاین";
+    console.log("status: false");
+}
+
 
     // نمایش صفحه ویرایش
     function showEditPage() {

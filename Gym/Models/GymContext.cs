@@ -52,18 +52,11 @@ public partial class GymContext : DbContext
                 .HasMaxLength(10)
                 .IsFixedLength()
                 .HasColumnName("age");
-            entity.Property(e => e.Classes)
-                .HasMaxLength(10)
-                .IsFixedLength()
-                .HasColumnName("classes");
+            entity.Property(e => e.Classes).HasColumnName("classes");
             entity.Property(e => e.Date)
                 .HasMaxLength(50)
                 .IsFixedLength()
                 .HasColumnName("date");
-            entity.Property(e => e.Gender)
-                .HasMaxLength(10)
-                .IsFixedLength()
-                .HasColumnName("gender");
             entity.Property(e => e.Lastsing)
                 .HasMaxLength(50)
                 .IsFixedLength()
@@ -122,6 +115,7 @@ public partial class GymContext : DbContext
                 .IsFixedLength()
                 .HasColumnName("name");
             entity.Property(e => e.Userid).HasColumnName("userid");
+            entity.Property(e => e.Workedhours).HasColumnName("workedhours");
         });
 
         OnModelCreatingPartial(modelBuilder);

@@ -9,20 +9,14 @@ async function up() {
   let Pnumber = document.getElementById("number").value;
   let calssesConverted = Number(classes);
   let alert = document.getElementById("alert");
-  let radios = document.getElementsByName("gender");
   let genderValue = "";
-      // گرفتن جنسیت
-  for (let i = 0; i < radios.length; i++) {
-    if (radios[i].checked) {
-      genderValue = radios[i].value;
-      break;
-    }
-  }
+
+  let toMuints = calssesConverted * 60 ;
 
     // بررسی پر بودن همه فیلدها
     if (
       name === "" || lname === "" || age === "" ||
-      classes === "" || genderValue === "" || Pnumber === ""
+      classes === "" || Pnumber === ""
     ) 
     {
       alert.innerText = "لطفا اطلاعات خواسته‌ شده را کامل وارد کنید.";
@@ -67,8 +61,7 @@ async function up() {
       name: name,
       lname: lname,
       age: age,
-      classes: calssesConverted,
-      gender: genderValue,
+      classes: toMuints,
       Pnumber: Pnumber,
       cardUID: cardUID,
     }

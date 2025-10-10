@@ -20,4 +20,6 @@ public partial class UserLog
     public string? Name { get; set; }
 
     public string? Lname { get; set; }
+
+    public TimeSpan? Workedhours { get; set; }
 }

@@ -65,6 +65,9 @@ function f1(list) {
     let t = document.querySelector("#data-table tbody");
     list.forEach(x => {
         let item = document.createElement("tr");
+ 
+        let hoursRemaining = Math.floor(x.classes / 60);
+        let minutesRemaining = x.classes % 60;
 
         let ssss;
         if(x.status == true){
@@ -84,12 +87,9 @@ function f1(list) {
         cell2.className = "row1";
         let cell4 = document.createElement("th");
         cell4.textContent = x.number;
-        let cell5 = document.createElement("th");
-        cell5.textContent = x.gender;
-        cell5.className = "row1";
 
         let cell7 = document.createElement("th");
-        cell7.textContent = x.classes;
+        cell7.textContent = cell7.textContent = `${hoursRemaining} ساعت و ${minutesRemaining} دقیقه`;;
         cell7.className = "classes";
 
         let cell8 = document.createElement("th");
@@ -102,7 +102,6 @@ function f1(list) {
         item.appendChild(cell2);
         item.appendChild(cell3);
         item.appendChild(cell4);
-        item.appendChild(cell5);
         item.appendChild(cell7);
         item.appendChild(cell8);
 

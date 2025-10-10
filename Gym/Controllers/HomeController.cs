@@ -58,12 +58,14 @@ public class HomeController : Controller
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
     [HttpPost]
-    public string newPerson(string name, string lname, string age, string classes, string gender, string Pnumber, string CardUID)
+    public string newPerson(string name, string lname, string age, string classes, string Pnumber, string CardUID)
     {
         var currentDate = DateTime.Now.ToShortPersianDateString();
 
 
         var exist = db.Men.FirstOrDefault(x => x.Uid == CardUID);
+
+        int t = int.Parse(classes);
 
         if (exist != null)
         {
@@ -75,8 +77,7 @@ public class HomeController : Controller
             man.Name = name;
             man.Lname = lname;
             man.Age = age;
-            man.Classes = classes;
-            man.Gender = gender;
+            man.Classes = t;
             man.Number = Pnumber;
             man.Date = currentDate;
             man.Uid = CardUID;
@@ -94,31 +95,31 @@ public class HomeController : Controller
         return db.Men.Skip(skip).Take(take).ToList();
     }
 
-    public IActionResult getmen(int take, int skip, string filterValue)
-    {
-        var user = db.Men
-        .Where(x => x.Gender == filterValue)
-        .Skip(skip)
-        .Take(take)
-        .ToList();
-        return Ok(user);
-    }
+    // public IActionResult getmen(int take, int skip, string filterValue)
+    // {
+    //     var user = db.Men
+    //     .Where(x => x.Gender == filterValue)
+    //     .Skip(skip)
+    //     .Take(take)
+    //     .ToList();
+    //     return Ok(user);
+    // }
 
-    public IActionResult getwomen(int take, int skip, string filterValue)
-    {
-        var user = db.Men
-        .Where(x => x.Gender == filterValue)
-        .Skip(skip)
-        .Take(take)
-        .ToList();
-        return Ok(user);
-    }
+    // public IActionResult getwomen(int take, int skip, string filterValue)
+    // {
+    //     var user = db.Men
+    //     .Where(x => x.Gender == filterValue)
+    //     .Skip(skip)
+    //     .Take(take)
+    //     .ToList();
+    //     return Ok(user);
+    // }
 
     [HttpGet]
     public IActionResult GetExpiredUsers(int take, int skip)
     {
         var expiredUsers = db.Men
-        .Where(u => u.Classes == "0")
+        .Where(u => u.Classes == 0)
         .Skip(skip)
         .Take(take)
         .ToList();
@@ -131,9 +132,10 @@ public class HomeController : Controller
     [HttpPost]
     public string updateClasses(int userId, string newClasses)
     {
+        int t = int.Parse(newClasses);
         Thread.Sleep(1000);
         Man man = db.Men.Where(x => x.Id == userId).FirstOrDefault();
-        man.Classes = newClasses;
+        man.Classes = t;
         if (man != null)
         {
             db.SaveChanges();
@@ -232,8 +234,9 @@ public class HomeController : Controller
             {
                 return BadRequest("کاربر پیدا نشد");
             }
+            int t = int.Parse(classes);
 
-            user.Classes = classes;
+            user.Classes = t;
             var currentDate = DateTime.Now.ToShortPersianDateString();
             user.Date = currentDate;
 
@@ -295,6 +298,10 @@ public class HomeController : Controller
             findLog.Exittime = "byebye";
             findLog.Exitdate = DateTime.Now;
             FindByuid.Status = false;
+            TimeSpan workedHours = findLog.Exitdate.Value - findLog.Enterydate.Value;
+            findLog.Workedhours = workedHours;
+            int workedMinutes = (int)workedHours.TotalMinutes;
+            FindByuid.Classes -= workedMinutes;
             db.SaveChanges();
             return $"کاربر {findLog.Lname} خارج شد.";
         }
@@ -345,12 +352,6 @@ public class HomeController : Controller
             }
 
 
-            if (data.ContainsKey("gender"))
-            {
-                user.Gender = data["gender"];
-            }
-
-
             db.SaveChanges();
 
             return Json(new { success = true });
@@ -380,36 +381,37 @@ public class HomeController : Controller
     [HttpPost]
     public string tamdidJalase(int id, string newClasses)
     {
+        int t = int.Parse(newClasses);
         var currentDate = DateTime.Now.ToShortPersianDateString();
         var user = db.Men.FirstOrDefault(x => x.Id == id);
         if (user != null)
         {
             user.Date = currentDate;
-            user.Classes = newClasses;
+            user.Classes = t;
             db.SaveChanges();
             return "جلسات تمدید شد.";
         }
         return "خطایی رخ داد";
     }
 
-    [HttpPost]
-    public string manualPer(int id, int presetCount)
-    {
-        var user = db.Men.FirstOrDefault(x => x.Id == id);
+    // [HttpPost]
+    // public string manualPer(int id, int presetCount)
+    // {
+    //     var user = db.Men.FirstOrDefault(x => x.Id == id);
 
-        if (user != null)
-        {
-            int currentClass;
-            if (int.TryParse(user.Classes, out currentClass))
-            {
-                currentClass = currentClass - presetCount;
-                user.Classes = currentClass.ToString();
-                db.SaveChanges();
-                return "حضور ثبت شد.";
-            }
-        }
-        return "خطایی رخ داد!";
-    }
+    //     if (user != null)
+    //     {
+    //         int currentClass;
+    //         if (int.TryParse(user.Classes, out currentClass))
+    //         {
+    //             currentClass = currentClass - presetCount;
+    //             user.Classes = currentClass.ToString();
+    //             db.SaveChanges();
+    //             return "حضور ثبت شد.";
+    //         }
+    //     }
+    //     return "خطایی رخ داد!";
+    // }
     [HttpPost]
     public string newPass(string username, string password, int id)
     {
