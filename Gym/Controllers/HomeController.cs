@@ -427,7 +427,7 @@ public class HomeController : Controller
         }
         return "خطایی رخ داد!";
     }
-    public IActionResult GetLogss(int take, int skip)
+    public IActionResult getlogss(int take, int skip)
     {
         var logs = db.UserLogs.OrderByDescending(l => l.Logid)
         .Skip(skip)
@@ -439,6 +439,9 @@ public class HomeController : Controller
             x.Userid,
             x.Name,
             x.Lname,
+            WorkedHours = x.Workedhours.HasValue
+        ? $"{(int)x.Workedhours.Value.TotalHours:D2}:{x.Workedhours.Value.Minutes:D2}"
+        : null,
             EnteryDate = x.Enterydate?.ToShortPersianDateTimeString(), // ← شمسی
             ExitDate = x.Exitdate?.ToShortPersianDateTimeString()      // ← شمسی
         });

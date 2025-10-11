@@ -79,7 +79,7 @@ function creatRow(list) {
         cell5.className = "row1";
 
         let cell6 = document.createElement("th");
-        cell6.textContent = z.workedhours;
+        cell6.textContent = z.workedHours;
         cell6.className = "row1";
 
         item.appendChild(cell1);
