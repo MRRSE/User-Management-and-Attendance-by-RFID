@@ -15,7 +15,7 @@ function load() {
                 skip += take;
                 console.log(res.data)
             })
-            .catch(err => console.log(err.message));
+            .catch(err => console.log(err));
     }
     else if(filterValue === "مرد"){
         axios({
