@@ -379,9 +379,9 @@ public class HomeController : Controller
         }
     }
     [HttpPost]
-    public string tamdidJalase(int id, string newClasses)
+    public string tamdidJalase(int id, string newwClasses)
     {
-        int t = int.Parse(newClasses);
+        int t = int.Parse(newwClasses);
         var currentDate = DateTime.Now.ToShortPersianDateString();
         var user = db.Men.FirstOrDefault(x => x.Id == id);
         if (user != null)
@@ -460,6 +460,9 @@ public class HomeController : Controller
             x.Userid,
             x.Name,
             x.Lname,
+            WorkedHours = x.Workedhours.HasValue
+        ? $"{(int)x.Workedhours.Value.TotalHours:D2}:{x.Workedhours.Value.Minutes:D2}"
+        : null,
             EnteryDate = x.Enterydate?.ToShortPersianDateTimeString(), // ← شمسی
             ExitDate = x.Exitdate?.ToShortPersianDateTimeString()      // ← شمسی
         });
@@ -478,6 +481,9 @@ public class HomeController : Controller
             x.Userid,
             x.Name,
             x.Lname,
+            WorkedHours = x.Workedhours.HasValue
+        ? $"{(int)x.Workedhours.Value.TotalHours:D2}:{x.Workedhours.Value.Minutes:D2}"
+        : null,
             EnteryDate = x.Enterydate?.ToShortPersianDateTimeString(), // ← شمسی
             ExitDate = x.Exitdate?.ToShortPersianDateTimeString()      // ← شمسی
         });
